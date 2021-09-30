@@ -13,7 +13,7 @@ knitr::opts_chunk$set(echo = TRUE)
 # dplyr y ggplot2
 
 
-```{r}
+```{r message=FALSE}
 library (dplyr)
 library (ggplot2)
 
@@ -86,7 +86,51 @@ rios <-
          banano = Banano.mm..90km2.) %>% 
   mutate(fecha = as.Date(fecha, format = "%m/%d/%Y"),
          promedio = (pandora + banano) / 2)
+
 slice_head(rios, n=10)
 ```
+```{r}
+# Selección, renombramiento y conversión de columnas
+covid_columnas_seleccionadas <-
+  covid %>%
+  select(FECHA, muj_posi, hom_posi) %>%
+  rename(
+    fecha = FECHA,
+    positivos_mujeres = muj_posi,
+    positivos_hombres = hom_posi
+  ) %>%
+  mutate(fecha = as.Date(fecha, format = "%d/%m/%Y"))
+
+slice_head(covid_columnas_seleccionadas, n=10)
+
+```
          
-         
+```{r}
+# Selección, renombramiento, conversión de columnas y filtrado
+covid_filtrado <-
+  covid %>%
+  select(FECHA, nue_posi) %>%
+  rename(fecha = FECHA, positivos_nuevos = nue_posi) %>%
+  mutate(fecha = as.Date(fecha, format = "%d/%m/%Y")) %>%
+  filter(positivos_nuevos >= 2500) %>%
+  arrange (desc(positivos_nuevos))
+
+slice_head(covid_filtrado, n=10)
+
+```
+
+#arrange
+
+```{r}
+# Selección, renombramiento, filtrado y conversión de columnas
+covid_filtrado_ordenado_x_positivos_nuevos <-
+  covid %>%
+  select(FECHA, nue_posi) %>%
+  rename(fecha = FECHA, positivos_nuevos = nue_posi) %>%
+  mutate(fecha = as.Date(fecha, format = "%d/%m/%Y")) %>%
+  filter(positivos_nuevos >= 2500) %>%
+  arrange(desc(positivos_nuevos))
+
+slice_head(covid_filtrado, n=10)
+```
+
