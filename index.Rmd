@@ -134,3 +134,35 @@ covid_filtrado_ordenado_x_positivos_nuevos <-
 slice_head(covid_filtrado, n=10)
 ```
 
+```{r summarise}
+# Selección, renombramiento, filtrado y conversión de columnas
+covid_positivos_nuevos_sumarizado_x_mes <-
+  covid %>%
+  select(FECHA, nue_posi) %>%
+  rename(fecha = FECHA, positivos_nuevos = nue_posi) %>%
+  mutate(fecha = as.Date(fecha, format = "%d/%m/%Y")) %>%
+  group_by(anio = format(fecha,"%Y"), mes = format(fecha,"%m")) %>%
+  summarise(suma_positivos = sum(positivos_nuevos))
+
+covid_positivos_nuevos_sumarizado_x_mes
+```
+
+```{r summarise}
+# Selección, renombramiento, filtrado y conversión de columnas
+covid_positivos_nuevos_promedio_x_mes <-
+  covid %>%
+  select(FECHA, nue_posi) %>%
+  rename(fecha = FECHA, positivos_nuevos = nue_posi) %>%
+  mutate(fecha = as.Date(fecha, format = "%d/%m/%Y")) %>%
+  group_by(mes = format(fecha,"%Y"), mes = format(fecha,"%m")) %>%
+  summarise(suma_positivos = mean(positivos_nuevos))
+
+covid_positivos_nuevos_promedio_x_mes
+```
+
+rios %>%
+ggplot (aes (x= pandora))+
+geom (histogram)
+      color: "black"
+      fill= "white"
+
